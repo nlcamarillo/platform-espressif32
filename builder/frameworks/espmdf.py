@@ -551,7 +551,8 @@ envsafe.Prepend(
 libs.append(
     envsafe.BuildLibrary(
         join("$BUILD_DIR", "wpa_supplicant"),
-        join(IDF_DIR, "components", "wpa_supplicant")
+        join(IDF_DIR, "components", "wpa_supplicant"),
+        src_filter="+<*> -<test*>"
     )
 )
 

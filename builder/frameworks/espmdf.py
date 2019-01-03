@@ -427,7 +427,8 @@ env.Depends("$BUILD_DIR/$PROGNAME$PROGSUFFIX", env.ElfToBin(
 
 libs = []
 
-ignore_dirs = (
+# idf src dirs
+ignore_dirs_idf = (
     "app_trace",
     "aws_iot",
     "espcoredump",
@@ -444,12 +445,23 @@ ignore_dirs = (
 )
 
 for d in listdir(join(IDF_DIR, "components")):
-    if d in ignore_dirs:
+    if d in ignore_dirs_idf:
         continue
     component_dir = join(IDF_DIR, "components", d)
     if isdir(component_dir):
         libs.append(build_component(component_dir))
 
+
+# mdf src dirs
+ignore_dirs_mdf = (
+    "third_party"
+)
+for d in listdir(join(MDF_DIR, "components")):
+    if d in ignore_dirs_mdf:
+        continue
+    component_dir = join(MDF_DIR, "components", d)
+    if isdir(component_dir):
+        libs.append(build_component(component_dir))
 
 # component.mk contains configuration for bootloader
 libs.append(env.BuildLibrary(
@@ -537,6 +549,13 @@ libs.append(
     envsafe.BuildLibrary(
         join("$BUILD_DIR", "wpa_supplicant"),
         join(IDF_DIR, "components", "wpa_supplicant")
+    )
+)
+
+libs.append(
+    envsafe.BuildLibrary(
+        join("$BUILD_DIR", "miniz"),
+        join(MDF_DIR, "components", "third_party", "miniz")
     )
 )
 

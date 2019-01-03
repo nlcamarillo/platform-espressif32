@@ -28,6 +28,10 @@
       "package": "framework-espidf",
       "script": "builder/frameworks/espidf.py"
     },
+    "espmdf": {
+      "package": "framework-espmdf",
+      "script": "builder/frameworks/espmdf.py"
+    },
     "simba": {
       "package": "framework-simba",
       "script": "builder/frameworks/simba.py"
@@ -48,6 +52,11 @@
       "version": "~2.10000.0"
     },
     "framework-espidf": {
+      "type": "framework",
+      "optional": true,
+      "version": "~3.30101.0"
+    },
+    "framework-espmdf": {
       "type": "framework",
       "optional": true,
       "version": "~3.30101.0"

@@ -303,7 +303,9 @@ env.Prepend(
         ("IDF_VER", '\\"%s\\"' %
          platform.get_package_version("framework-espidf")),
         ("MDF_VER", '\\"%s\\"' %
-         platform.get_package_version("framework-espmdf"))
+         platform.get_package_version("framework-espmdf")),
+        ("PROJECT_VER", '\\"\\"'),
+        ("PROJECT_NAME", '\\"\\"')
     ],
 
     CCFLAGS=[

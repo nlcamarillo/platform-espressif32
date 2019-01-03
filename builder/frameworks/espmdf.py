@@ -35,7 +35,9 @@ platform = env.PioPlatform()
 env.SConscript("_bare.py", exports="env")
 env.SConscript("_embedtxt_files.py", exports="env")
 
-IDF_DIR = platform.get_package_dir("framework-espidf")
+MDF_DIR = platform.get_package_dir("framework-espmdf")
+IDF_DIR = join(MDF_DIR, "esp-idf")
+assert MDF_DIR and isdir(MDF_DIR)
 assert IDF_DIR and isdir(IDF_DIR)
 
 

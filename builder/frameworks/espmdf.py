@@ -288,7 +288,9 @@ env.Prepend(
     CPPDEFINES=[
         "WITH_POSIX",
         ("IDF_VER", '\\"%s\\"' %
-         platform.get_package_version("framework-espidf"))
+         platform.get_package_version("framework-espidf")),
+        ("MDF_VER", '\\"%s\\"' %
+         platform.get_package_version("framework-espmdf"))
     ],
 
     CCFLAGS=[

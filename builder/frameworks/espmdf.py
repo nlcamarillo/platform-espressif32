@@ -446,6 +446,7 @@ libs = []
 
 # idf src dirs
 ignore_dirs_idf = (
+    "asio",
     "app_trace",
     "aws_iot",
     "espcoredump",
@@ -458,7 +459,8 @@ ignore_dirs_idf = (
     "soc",
     "spi_flash",
     "libsodium",
-    "wpa_supplicant"
+    "wpa_supplicant",
+    "mqtt"
 )
 
 for d in listdir(join(IDF_DIR, "components")):

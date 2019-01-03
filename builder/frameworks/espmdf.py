@@ -35,8 +35,8 @@ platform = env.PioPlatform()
 env.SConscript("_bare.py", exports="env")
 env.SConscript("_embedtxt_files.py", exports="env")
 
-FRAMEWORK_DIR = platform.get_package_dir("framework-espidf")
-assert FRAMEWORK_DIR and isdir(FRAMEWORK_DIR)
+IDF_DIR = platform.get_package_dir("framework-espidf")
+assert IDF_DIR and isdir(IDF_DIR)
 
 
 def parse_mk(path):
@@ -120,9 +120,9 @@ def build_espidf_bootloader():
     envsafe.Append(CPPDEFINES=[("BOOTLOADER_BUILD", 1)])
     envsafe.Replace(
         LIBPATH=[
-            join(FRAMEWORK_DIR, "components", "esp32", "ld"),
-            join(FRAMEWORK_DIR, "components", "esp32", "lib"),
-            join(FRAMEWORK_DIR, "components", "bootloader", "subproject", "main")
+            join(IDF_DIR, "components", "esp32", "ld"),
+            join(IDF_DIR, "components", "esp32", "lib"),
+            join(IDF_DIR, "components", "bootloader", "subproject", "main")
         ],
 
         LINKFLAGS=[
@@ -140,8 +140,8 @@ def build_espidf_bootloader():
 
     envsafe.Append(
         CPPPATH=[
-            join(FRAMEWORK_DIR, "components", "esp32"),
-            join(FRAMEWORK_DIR, "components", "bootloader_support", "include_priv")
+            join(IDF_DIR, "components", "esp32"),
+            join(IDF_DIR, "components", "bootloader_support", "include_priv")
         ]
     )
 
@@ -149,26 +149,26 @@ def build_espidf_bootloader():
         LIBS=[
             envsafe.BuildLibrary(
                 join("$BUILD_DIR", "bootloader", "bootloader_support"),
-                join(FRAMEWORK_DIR, "components", "bootloader_support"),
+                join(IDF_DIR, "components", "bootloader_support"),
                 src_filter="+<*> -<test>"
             ),
             envsafe.BuildLibrary(
                 join("$BUILD_DIR", "bootloader", "log"),
-                join(FRAMEWORK_DIR, "components", "log")
+                join(IDF_DIR, "components", "log")
             ),
             envsafe.BuildLibrary(
                 join("$BUILD_DIR", "bootloader", "spi_flash"),
-                join(FRAMEWORK_DIR, "components", "spi_flash"),
+                join(IDF_DIR, "components", "spi_flash"),
                 src_filter="-<*> +<spi_flash_rom_patch.c>"
             ),
             envsafe.BuildLibrary(
                 join("$BUILD_DIR", "bootloader", "micro-ecc"),
-                join(FRAMEWORK_DIR, "components", "micro-ecc"),
+                join(IDF_DIR, "components", "micro-ecc"),
                 src_filter="+<*> -<micro-ecc/test>"
             ),
             envsafe.BuildLibrary(
                 join("$BUILD_DIR", "bootloader", "soc"),
-                join(FRAMEWORK_DIR, "components", "soc"),
+                join(IDF_DIR, "components", "soc"),
                 src_filter="+<*> -<test> -<esp32/test>"
             ),
             "gcc", "stdc++"
@@ -179,82 +179,82 @@ def build_espidf_bootloader():
         join("$BUILD_DIR", "bootloader.elf"),
         envsafe.CollectBuildFiles(
             join("$BUILD_DIR", "bootloader"),
-            join(FRAMEWORK_DIR, "components", "bootloader", "subproject", "main")
+            join(IDF_DIR, "components", "bootloader", "subproject", "main")
         )
     )
 
 
 env.Prepend(
     CPPPATH=[
-        join(FRAMEWORK_DIR, "components", "app_trace", "include"),
-        join(FRAMEWORK_DIR, "components", "app_update", "include"),
-        join(FRAMEWORK_DIR, "components", "aws_iot", "include"),
-        join(FRAMEWORK_DIR, "components", "aws_iot",
+        join(IDF_DIR, "components", "app_trace", "include"),
+        join(IDF_DIR, "components", "app_update", "include"),
+        join(IDF_DIR, "components", "aws_iot", "include"),
+        join(IDF_DIR, "components", "aws_iot",
              "aws-iot-device-sdk-embedded-C", "include"),
-        join(FRAMEWORK_DIR, "components", "bootloader_support", "include"),
-        join(FRAMEWORK_DIR, "components", "bt", "include"),
-        join(FRAMEWORK_DIR, "components", "bt", "bluedroid", "api", "include", "api"),
-        join(FRAMEWORK_DIR, "components", "coap", "port", "include"),
-        join(FRAMEWORK_DIR, "components", "coap", "port", "include", "coap"),
-        join(FRAMEWORK_DIR, "components", "coap", "libcoap", "include"),
-        join(FRAMEWORK_DIR, "components", "coap",
+        join(IDF_DIR, "components", "bootloader_support", "include"),
+        join(IDF_DIR, "components", "bt", "include"),
+        join(IDF_DIR, "components", "bt", "bluedroid", "api", "include", "api"),
+        join(IDF_DIR, "components", "coap", "port", "include"),
+        join(IDF_DIR, "components", "coap", "port", "include", "coap"),
+        join(IDF_DIR, "components", "coap", "libcoap", "include"),
+        join(IDF_DIR, "components", "coap",
              "libcoap", "include", "coap"),
-        join(FRAMEWORK_DIR, "components", "console"),
-        join(FRAMEWORK_DIR, "components", "driver", "include"),
-        join(FRAMEWORK_DIR, "components", "esp-tls"),
-        join(FRAMEWORK_DIR, "components", "esp_adc_cal", "include"),
-        join(FRAMEWORK_DIR, "components", "esp_http_client", "include"),
-        join(FRAMEWORK_DIR, "components", "esp_https_ota", "include"),
-        join(FRAMEWORK_DIR, "components", "esp32", "include"),
-        join(FRAMEWORK_DIR, "components", "ethernet", "include"),
-        join(FRAMEWORK_DIR, "components", "expat", "port", "include"),
-        join(FRAMEWORK_DIR, "components", "expat", "include", "expat"),
-        join(FRAMEWORK_DIR, "components", "fatfs", "src"),
-        join(FRAMEWORK_DIR, "components", "freertos", "include"),
-        join(FRAMEWORK_DIR, "components", "heap", "include"),
-        join(FRAMEWORK_DIR, "components", "jsmn", "include"),
-        join(FRAMEWORK_DIR, "components", "json", "cJSON"),
-        join(FRAMEWORK_DIR, "components", "libsodium", "libsodium", "src",
+        join(IDF_DIR, "components", "console"),
+        join(IDF_DIR, "components", "driver", "include"),
+        join(IDF_DIR, "components", "esp-tls"),
+        join(IDF_DIR, "components", "esp_adc_cal", "include"),
+        join(IDF_DIR, "components", "esp_http_client", "include"),
+        join(IDF_DIR, "components", "esp_https_ota", "include"),
+        join(IDF_DIR, "components", "esp32", "include"),
+        join(IDF_DIR, "components", "ethernet", "include"),
+        join(IDF_DIR, "components", "expat", "port", "include"),
+        join(IDF_DIR, "components", "expat", "include", "expat"),
+        join(IDF_DIR, "components", "fatfs", "src"),
+        join(IDF_DIR, "components", "freertos", "include"),
+        join(IDF_DIR, "components", "heap", "include"),
+        join(IDF_DIR, "components", "jsmn", "include"),
+        join(IDF_DIR, "components", "json", "cJSON"),
+        join(IDF_DIR, "components", "libsodium", "libsodium", "src",
              "libsodium", "include"),
-        join(FRAMEWORK_DIR, "components", "libsodium", "port_include"),
-        join(FRAMEWORK_DIR, "components", "log", "include"),
-        join(FRAMEWORK_DIR, "components", "lwip", "include", "lwip"),
-        join(FRAMEWORK_DIR, "components", "lwip", "include", "lwip", "port"),
-        join(FRAMEWORK_DIR, "components", "lwip", "include", "lwip", "posix"),
-        join(FRAMEWORK_DIR, "components", "lwip", "apps", "ping"),
+        join(IDF_DIR, "components", "libsodium", "port_include"),
+        join(IDF_DIR, "components", "log", "include"),
+        join(IDF_DIR, "components", "lwip", "include", "lwip"),
+        join(IDF_DIR, "components", "lwip", "include", "lwip", "port"),
+        join(IDF_DIR, "components", "lwip", "include", "lwip", "posix"),
+        join(IDF_DIR, "components", "lwip", "apps", "ping"),
         join("$PROJECTSRC_DIR"),
-        join(FRAMEWORK_DIR, "components", "mbedtls", "port", "include"),
-        join(FRAMEWORK_DIR, "components", "mbedtls", "mbedtls", "include"),
-        join(FRAMEWORK_DIR, "components", "mdns", "include"),
-        join(FRAMEWORK_DIR, "components", "micro-ecc", "micro-ecc"),
-        join(FRAMEWORK_DIR, "components", "nghttp", "nghttp2", "lib", "includes"),
-        join(FRAMEWORK_DIR, "components", "nghttp", "port", "include"),
-        join(FRAMEWORK_DIR, "components", "newlib", "platform_include"),
-        join(FRAMEWORK_DIR, "components", "newlib", "include"),
-        join(FRAMEWORK_DIR, "components", "nvs_flash", "include"),
-        join(FRAMEWORK_DIR, "components", "openssl", "include"),
-        join(FRAMEWORK_DIR, "components", "pthread", "include"),
-        join(FRAMEWORK_DIR, "components", "sdmmc", "include"),
-        join(FRAMEWORK_DIR, "components", "smartconfig_ack", "include"),
-        join(FRAMEWORK_DIR, "components", "soc", "esp32", "include"),
-        join(FRAMEWORK_DIR, "components", "soc", "include"),
-        join(FRAMEWORK_DIR, "components", "spi_flash", "include"),
-        join(FRAMEWORK_DIR, "components", "spiffs", "include"),
-        join(FRAMEWORK_DIR, "components", "tcpip_adapter", "include"),
-        join(FRAMEWORK_DIR, "components", "ulp", "include"),
-        join(FRAMEWORK_DIR, "components", "vfs", "include"),
-        join(FRAMEWORK_DIR, "components", "wear_levelling", "include"),
-        join(FRAMEWORK_DIR, "components", "wpa_supplicant", "include"),
-        join(FRAMEWORK_DIR, "components", "wpa_supplicant", "port", "include"),
-        join(FRAMEWORK_DIR, "components", "xtensa-debug-module", "include")
+        join(IDF_DIR, "components", "mbedtls", "port", "include"),
+        join(IDF_DIR, "components", "mbedtls", "mbedtls", "include"),
+        join(IDF_DIR, "components", "mdns", "include"),
+        join(IDF_DIR, "components", "micro-ecc", "micro-ecc"),
+        join(IDF_DIR, "components", "nghttp", "nghttp2", "lib", "includes"),
+        join(IDF_DIR, "components", "nghttp", "port", "include"),
+        join(IDF_DIR, "components", "newlib", "platform_include"),
+        join(IDF_DIR, "components", "newlib", "include"),
+        join(IDF_DIR, "components", "nvs_flash", "include"),
+        join(IDF_DIR, "components", "openssl", "include"),
+        join(IDF_DIR, "components", "pthread", "include"),
+        join(IDF_DIR, "components", "sdmmc", "include"),
+        join(IDF_DIR, "components", "smartconfig_ack", "include"),
+        join(IDF_DIR, "components", "soc", "esp32", "include"),
+        join(IDF_DIR, "components", "soc", "include"),
+        join(IDF_DIR, "components", "spi_flash", "include"),
+        join(IDF_DIR, "components", "spiffs", "include"),
+        join(IDF_DIR, "components", "tcpip_adapter", "include"),
+        join(IDF_DIR, "components", "ulp", "include"),
+        join(IDF_DIR, "components", "vfs", "include"),
+        join(IDF_DIR, "components", "wear_levelling", "include"),
+        join(IDF_DIR, "components", "wpa_supplicant", "include"),
+        join(IDF_DIR, "components", "wpa_supplicant", "port", "include"),
+        join(IDF_DIR, "components", "xtensa-debug-module", "include")
     ],
 
     LIBPATH=[
-        join(FRAMEWORK_DIR, "components", "esp32"),
-        join(FRAMEWORK_DIR, "components", "esp32", "ld"),
-        join(FRAMEWORK_DIR, "components", "esp32", "lib"),
-        join(FRAMEWORK_DIR, "components", "bt", "lib"),
-        join(FRAMEWORK_DIR, "components", "newlib", "lib"),
+        join(IDF_DIR, "components", "esp32"),
+        join(IDF_DIR, "components", "esp32", "ld"),
+        join(IDF_DIR, "components", "esp32", "lib"),
+        join(IDF_DIR, "components", "bt", "lib"),
+        join(IDF_DIR, "components", "newlib", "lib"),
         "$BUILD_DIR"
     ],
 
@@ -266,7 +266,7 @@ env.Prepend(
 )
 
 for root, dirs, _ in walk(join(
-        FRAMEWORK_DIR, "components", "bt", "bluedroid")):
+        IDF_DIR, "components", "bt", "bluedroid")):
     for d in dirs:
         if (d == "include"):
             env.Prepend(CPPPATH=[join(root, d)])
@@ -290,7 +290,7 @@ env.Prepend(
         "-Wno-error=unused-function"
     ],
 
-    LIBSOURCE_DIRS=[join(FRAMEWORK_DIR, "libraries")]
+    LIBSOURCE_DIRS=[join(IDF_DIR, "libraries")]
 )
 
 env.Append(
@@ -373,7 +373,7 @@ else:
 # Generate partition table
 #
 
-fwpartitions_dir = join(FRAMEWORK_DIR, "components", "partition_table")
+fwpartitions_dir = join(IDF_DIR, "components", "partition_table")
 partitions_csv = env.BoardConfig().get("build.partitions",
                                        "partitions_singleapp.csv")
 env.Replace(
@@ -385,7 +385,7 @@ partition_table = env.Command(
     join("$BUILD_DIR", "partitions.bin"),
     "$PARTITIONS_TABLE_CSV",
     env.VerboseAction('"$PYTHONEXE" "%s" -q $SOURCE $TARGET' % join(
-        FRAMEWORK_DIR, "components", "partition_table", "gen_esp32part.py"),
+        IDF_DIR, "components", "partition_table", "gen_esp32part.py"),
         "Generating partitions $TARGET"))
 
 
@@ -397,7 +397,7 @@ env.Depends("$BUILD_DIR/$PROGNAME$PROGSUFFIX", partition_table)
 
 linker_script = env.Command(
     join("$BUILD_DIR", "esp32_out.ld"),
-    join(FRAMEWORK_DIR, "components", "esp32", "ld", "esp32.ld"),
+    join(IDF_DIR, "components", "esp32", "ld", "esp32.ld"),
     env.VerboseAction(
         '$CC -I"$PROJECTSRC_DIR" -C -P -x  c -E $SOURCE -o $TARGET',
         "Generating LD script $TARGET"))
@@ -433,10 +433,10 @@ ignore_dirs = (
     "wpa_supplicant"
 )
 
-for d in listdir(join(FRAMEWORK_DIR, "components")):
+for d in listdir(join(IDF_DIR, "components")):
     if d in ignore_dirs:
         continue
-    component_dir = join(FRAMEWORK_DIR, "components", d)
+    component_dir = join(IDF_DIR, "components", d)
     if isdir(component_dir):
         libs.append(build_component(component_dir))
 
@@ -444,31 +444,31 @@ for d in listdir(join(FRAMEWORK_DIR, "components")):
 # component.mk contains configuration for bootloader
 libs.append(env.BuildLibrary(
     join("$BUILD_DIR", "spi_flash"),
-    join(FRAMEWORK_DIR, "components", "spi_flash"),
+    join(IDF_DIR, "components", "spi_flash"),
     src_filter="+<*> -<test*> -<sim>"
 ))
 
 libs.append(env.BuildLibrary(
     join("$BUILD_DIR", "app_trace"),
-    join(FRAMEWORK_DIR, "components", "app_trace"),
+    join(IDF_DIR, "components", "app_trace"),
     src_filter="+<*> -<test> -<sys_view> -<gcov>"
 ))
 
 libs.append(env.BuildLibrary(
     join("$BUILD_DIR", "soc"),
-    join(FRAMEWORK_DIR, "components", "soc"),
+    join(IDF_DIR, "components", "soc"),
     src_filter="+<*> -<test> -<esp32/test>"
 ))
 
 libs.append(env.BuildLibrary(
     join("$BUILD_DIR", "heap"),
-    join(FRAMEWORK_DIR, "components", "heap"),
+    join(IDF_DIR, "components", "heap"),
     src_filter="+<*> -<test*> -<multi_heap_poisoning.c>"
 ))
 
 libs.append(env.BuildLibrary(
     join("$BUILD_DIR", "aws_iot"),
-    join(FRAMEWORK_DIR, "components", "aws_iot"),
+    join(IDF_DIR, "components", "aws_iot"),
     src_filter="-<*> +<port> +<aws-iot-device-sdk-embedded-C/src>"
 ))
 
@@ -476,14 +476,14 @@ envsafe = env.Clone()
 envsafe.Prepend(
     CPPDEFINES=["_ESP_FREERTOS_INTERNAL"],
     CPPPATH=[
-        join(FRAMEWORK_DIR, "components", "freertos", "include", "freertos")
+        join(IDF_DIR, "components", "freertos", "include", "freertos")
     ]
 )
 
 libs.append(
     envsafe.BuildLibrary(
         join("$BUILD_DIR", "freertos"),
-        join(FRAMEWORK_DIR, "components", "freertos"),
+        join(IDF_DIR, "components", "freertos"),
         src_filter="+<*> -<test*>"
     )
 )
@@ -497,9 +497,9 @@ envsafe.Prepend(
     ],
     CCFLAGS=["-Wno-type-limits", "-Wno-unknown-pragmas"],
     CPPPATH=[
-        join(FRAMEWORK_DIR, "components", "libsodium", "port"),
-        join(FRAMEWORK_DIR, "components", "libsodium", "port_include", "sodium"),
-        join(FRAMEWORK_DIR, "components", "libsodium", "libsodium", "src",
+        join(IDF_DIR, "components", "libsodium", "port"),
+        join(IDF_DIR, "components", "libsodium", "port_include", "sodium"),
+        join(IDF_DIR, "components", "libsodium", "libsodium", "src",
              "libsodium", "include", "sodium")
     ]
 )
@@ -507,7 +507,7 @@ envsafe.Prepend(
 libs.append(
     envsafe.BuildLibrary(
         join("$BUILD_DIR", "libsodium"),
-        join(FRAMEWORK_DIR, "components", "libsodium"),
+        join(IDF_DIR, "components", "libsodium"),
         src_filter="-<*> +<libsodium/src> +<port>"
     )
 )
@@ -526,7 +526,7 @@ envsafe.Prepend(
 libs.append(
     envsafe.BuildLibrary(
         join("$BUILD_DIR", "wpa_supplicant"),
-        join(FRAMEWORK_DIR, "components", "wpa_supplicant")
+        join(IDF_DIR, "components", "wpa_supplicant")
     )
 )
 

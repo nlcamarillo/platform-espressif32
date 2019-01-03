@@ -248,7 +248,15 @@ env.Prepend(
         join(IDF_DIR, "components", "wear_levelling", "include"),
         join(IDF_DIR, "components", "wpa_supplicant", "include"),
         join(IDF_DIR, "components", "wpa_supplicant", "port", "include"),
-        join(IDF_DIR, "components", "xtensa-debug-module", "include")
+        join(IDF_DIR, "components", "xtensa-debug-module", "include"),
+
+        join(MDF_DIR, "components", "mcommon", "include"),
+        join(MDF_DIR, "components", "mconfig", "include"),
+        join(MDF_DIR, "components", "mespnow", "include"),
+        join(MDF_DIR, "components", "mupgrade", "include"),
+        join(MDF_DIR, "components", "mlink", "include"),
+        join(MDF_DIR, "components", "mwifi", "include"),
+        join(MDF_DIR, "components", "third_party", "miniz", "include"),
     ],
 
     LIBPATH=[
